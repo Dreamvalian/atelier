@@ -10,3 +10,6 @@ memory/*
 *.wav
 node_modules/
 .venv/
+web.log
+output/
+memory/*.json
