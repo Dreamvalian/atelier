@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+output/*
+!output/.gitkeep
+!output/index.html
+memory/*
+!memory/.gitkeep
+*.mp3
+*.wav
+node_modules/
+.venv/

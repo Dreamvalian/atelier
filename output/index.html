@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier — AI Creative Director</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0f;
+    color: #e8e8f0;
+    min-height: 100vh;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(100, 120, 255, 0.08), transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(255, 100, 150, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #e8e8f0, #a0a0cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .tagline {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: #8888aa;
+    font-weight: 300;
+    margin-bottom: 3rem;
+    text-align: center;
+    max-width: 500px;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .feature {
+    padding: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+    transition: border-color 0.3s;
+  }
+
+  .feature:hover {
+    border-color: rgba(100, 120, 255, 0.3);
+  }
+
+  .feature h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6478ff;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature p {
+    font-size: 0.95rem;
+    color: #9999aa;
+    line-height: 1.5;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    color: #7777aa;
+    margin-top: 3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .generated {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .generated h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .generated-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .generated-item {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .generated-item:hover {
+    transform: translateY(-2px);
+  }
+
+  .generated-item a {
+    display: block;
+    padding: 1.5rem;
+    color: #e8e8f0;
+    text-decoration: none;
+  }
+
+  .generated-item .session-id {
+    font-size: 0.75rem;
+    color: #6478ff;
+    font-family: monospace;
+    margin-bottom: 0.5rem;
+  }
+
+  .generated-item .brief {
+    font-size: 0.9rem;
+    color: #9999aa;
+  }
+
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: #555;
+    font-size: 0.8rem;
+  }
+
+  footer a {
+    color: #6478ff;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1 class="logo">Atelier</h1>
+  <p class="tagline">Your AI creative workshop. Describe a feeling, get a brand identity.</p>
+
+  <div class="features">
+    <div class="feature">
+      <h3>Analyze</h3>
+      <p>Kimi K2.5 reads your brief and extracts brand personality, visual direction, and target aesthetic.</p>
+    </div>
+    <div class="feature">
+      <h3>Generate</h3>
+      <p>p5.js creates unique generative art patterns — color palettes, textures, and motion systems.</p>
+    </div>
+    <div class="feature">
+      <h3>Narrate</h3>
+      <p>Taglines, brand story, and emotional rationale — why every visual choice was made.</p>
+    </div>
+    <div class="feature">
+      <h3>Remember</h3>
+      <p>Your aesthetic preferences are learned across sessions. The output evolves with you.</p>
+    </div>
+  </div>
+
+  <span class="badge">Hermes Agent Creative Hackathon — Kimi Track</span>
+</div>
+
+<div class="generated">
+  <h2>Generated Identities</h2>
+  <div class="generated-grid" id="grid">
+    <!-- Populated by scanning output/ -->
+    <div class="generated-item">
+      <a href="/">
+        <div class="session-id">coming soon</div>
+        <div class="brief">First generation will appear here after running Atelier</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built for the <a href="https://x.com/NousResearch/status/2045225469088326039">Hermes Agent Creative Hackathon</a>
+  &middot; Powered by Kimi K2.5 + p5.js + Hermes
+</footer>
+
+</body>
+</html>
