@@ -46,8 +46,9 @@ def kimi_call(client, system_prompt, user_content, model="kimi-k2.5"):
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_content},
         ],
-        temperature=0.7,
+        temperature=0.6,
         max_tokens=2048,
+        extra_body={"thinking": {"type": "disabled"}},
     )
     return response.choices[0].message.content
 
