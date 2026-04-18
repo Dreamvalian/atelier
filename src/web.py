@@ -152,8 +152,11 @@ def home():
     return HOME_HTML
 
 
-@app.route("/generate", methods=["POST"])
+@app.route("/generate", methods=["GET", "POST"])
 def generate():
+    if request.method == "GET":
+        return redirect(url_for("home"))
+
     brief = request.form.get("brief", "").strip()
     user_id = request.form.get("user_id", "default").strip()
 

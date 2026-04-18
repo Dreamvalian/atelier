@@ -48,7 +48,7 @@ def get_kimi_client():
         )
 
     print("Error: Set MOONSHOT_API_KEY, KIMI_API_KEY, or OPENROUTER_API_KEY")
-    sys.exit(1)
+    raise RuntimeError("No API key configured — set MOONSHOT_API_KEY, KIMI_API_KEY, or OPENROUTER_API_KEY")
 
 
 def kimi_call(client, system_prompt, user_content, model="kimi-k2.5"):
