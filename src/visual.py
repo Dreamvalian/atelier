@@ -316,6 +316,15 @@ def generate_visual(analysis, output_dir):
     with open(palette_path, "w") as f:
         json.dump(colors, f, indent=2)
 
+    # Sync to webroot for live viewing
+    import shutil
+    webroot_dir = os.path.join("/var/www/atelier", os.path.basename(output_dir))
+    os.makedirs(webroot_dir, exist_ok=True)
+    for fname in ["visual.html", "palette.json", "analysis.json", "narrative.json"]:
+        src = os.path.join(output_dir, fname)
+        if os.path.exists(src):
+            shutil.copy2(src, webroot_dir)
+
     return {
         "file": filepath,
         "mode": mode,

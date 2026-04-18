@@ -145,6 +145,15 @@ def run_atelier(brief, user_id="default", session_id=None):
     with open(os.path.join(output_dir, "palette.json"), "w") as f:
         json.dump(analysis.get("palette", {}), f, indent=2)
 
+    # Sync to webroot
+    import shutil
+    webroot_dir = os.path.join("/var/www/atelier", session_id)
+    os.makedirs(webroot_dir, exist_ok=True)
+    for fname in ["analysis.json", "narrative.json", "palette.json", "visual.html"]:
+        src = os.path.join(output_dir, fname)
+        if os.path.exists(src):
+            shutil.copy2(src, webroot_dir)
+
     # Step 5: Save to memory
     print("[Atelier] Saving to memory...")
     save_session(user_id, {
