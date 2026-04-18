@@ -268,7 +268,7 @@ function keyPressed() {{ if (key === 's') saveCanvas('atelier-organic', 'png'); 
 def _bold_template(colors, analysis):
     """Bold p5.js visual — particles, high contrast, explosive."""
     complexity = analysis.get("complexity", 0.5)
-    energy = analysis.get("energy", 0.8)
+    energy = analysis.get("energy", 0.5)
 
     num_particles = int(100 + complexity * 300)
 

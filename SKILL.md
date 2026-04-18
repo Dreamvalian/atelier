@@ -28,7 +28,7 @@ Takes a brand/product brief → generates a complete brand identity system:
 
 ```bash
 cd /root/atelier
-python3 src/atelier.py "premium coffee brand for remote workers"
+python3 src/atelier.py --brief "premium coffee brand for remote workers" --user koala
 ```
 
 ## Architecture
@@ -59,7 +59,7 @@ atelier/
 
 - **Kimi K2.5** requires `temperature=0.6` + `extra_body={"thinking":{"type":"disabled"}}`
 - **p5.js** — `noiseSeed` seeded random, 3 visual modes (minimal/organic/bold)
-- **Minerva TTS** — Chinese voices with Indonesian-accented English
+- **gTTS** — Google TTS, English narration, generates MP3 manifestos
 - **Screenshots** — Playwright headless chromium, ignore cert errors flag
 - **Output** — auto-synced to `/var/www/atelier/<session_id>/`
 

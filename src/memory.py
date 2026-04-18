@@ -18,13 +18,18 @@ def load_memory(user_id):
     """Load full memory for a user. Returns empty structure if none exists."""
     path = _memory_path(user_id)
     if os.path.exists(path):
-        with open(path) as f:
-            return json.load(f)
+        try:
+            with open(path) as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            print(f"[Memory] Corrupt memory file for {user_id}, resetting.")
     return {
         "user_id": user_id,
         "sessions": [],
         "preferences": {
             "preferred_hues": [],
+            "preferred_secondary_hues": [],
+            "preferred_accent_hues": [],
             "avoided_hues": [],
             "style_weights": {
                 "minimal": 0.5,
@@ -56,14 +61,17 @@ def save_session(user_id, session_data):
     analysis = session_data.get("analysis", {})
     prefs = memory["preferences"]
 
-    # Track hues
+    # Track hues (primary, secondary, accent)
     palette = analysis.get("palette", {})
-    primary_hue = palette.get("primary_hue")
-    if primary_hue is not None:
-        if primary_hue not in prefs["preferred_hues"]:
-            prefs["preferred_hues"].append(int(primary_hue))
-        # Keep last 10
-        prefs["preferred_hues"] = prefs["preferred_hues"][-10:]
+    for hue_key in ["primary_hue", "secondary_hue", "accent_hue"]:
+        hue_val = palette.get(hue_key)
+        if hue_val is not None:
+            pref_key = f"preferred_{hue_key}s"
+            if pref_key not in prefs:
+                prefs[pref_key] = []
+            if int(hue_val) not in prefs[pref_key]:
+                prefs[pref_key].append(int(hue_val))
+            prefs[pref_key] = prefs[pref_key][-10:]
 
     # Update style weights (moving average)
     personality = analysis.get("brand_personality", "")
@@ -172,7 +180,9 @@ def get_preferences(user_id):
     return {
         "dominant_style": dominant_style,
         "style_weights": prefs["style_weights"],
-        "preferred_hues": prefs["preferred_hues"][-5:],  # Last 5
+        "preferred_hues": prefs["preferred_hues"][-5:],
+        "preferred_secondary_hues": prefs.get("preferred_secondary_hues", [])[-5:],
+        "preferred_accent_hues": prefs.get("preferred_accent_hues", [])[-5:],
         "avg_complexity": round(prefs["complexity"], 2),
         "avg_energy": round(prefs["energy"], 2),
         "preferred_motion": dominant_motion,
